@@ -1,18 +1,7 @@
-# Let's just use the local mongod instance. Edit as needed.
+import os
 
-# Please note that MONGO_HOST and MONGO_PORT could very well be left
-# out as they already default to a bare bones local 'mongod' instance.
-MONGO_HOST = 'localhost'
-MONGO_PORT = 27017
+MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/math-challenge-db')
 
-# Skip this block if your db has no auth. But it really should.
-# MONGO_USERNAME = 'admin'
-# MONGO_PASSWORD = 'adm'
-# Name of the database on which the user can be authenticated,
-# needed if --auth mode is enabled.
-# MONGO_AUTH_SOURCE = 'math-challenge-db'
-
-MONGO_DBNAME = 'math-challenge-db'
 
 challenge_schema = {
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
