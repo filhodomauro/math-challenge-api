@@ -1,3 +1,5 @@
-requests
-eve
+requests~=2.25.1
+eve~=1.1.4
 dnspython
+Flask~=1.1.2
+pymongo~=3.11.2
