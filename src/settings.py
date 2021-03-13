@@ -4,8 +4,6 @@ MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/math-challe
 
 
 challenge_schema = {
-    # Schema definition, based on Cerberus grammar. Check the Cerberus project
-    # (https://github.com/pyeve/cerberus) for details.
     'id': {
         'type': 'integer',
         'required': True,
@@ -33,24 +31,66 @@ match_schema = {
         'type': 'integer',
         'required': True,
     },
-    'player': {
-        'type': 'dict',
+    'players': {
+        'type': 'list',
         'schema': {
-            'name': {
-                'type': 'string',
-                'required': True,
-            },
-            'base_url': {
-                'type': 'string',
-                'required': True
+            'type': 'dict',
+            'schema': {
+                'id': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'base_url': {
+                    'type': 'string',
+                    'required': True
+                },
             }
         }
+    },
+    'status': {
+        'type': 'list',
+        'allowed': ['PLAYING', 'FINISHED']
+    },
+    'results': {
+        'type': 'list',
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'player_id': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'score': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'correct': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'wrong': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'execution_time': {
+                    'type': 'integer'
+                }
+            }
+        }
+    },
+    'winner': {
+        'type': 'string'
     }
 }
 
 match = {
     'item_title': 'matches',
-    'resource_methods': ['POST','GET'],
+    'resource_methods': ['POST', 'GET'],
+    'item_methods': ['GET'],
     'schema': match_schema,
 }
 
