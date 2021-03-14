@@ -3,6 +3,8 @@ from eve.auth import TokenAuth
 from flask import abort
 import firebase_admin
 from firebase_admin import auth
+from firebase_admin.exceptions import FirebaseError
+from firebase_admin.auth import ExpiredIdTokenError, InvalidIdTokenError
 
 
 class UserAuth(TokenAuth):
@@ -16,7 +18,12 @@ class UserAuth(TokenAuth):
 
     def check_auth(self, token, allowed_roles, resource, method):
         if not self.__test_mode:
-            return auth.verify_id_token(token)
+            try:
+                return auth.verify_id_token(token)
+            except InvalidIdTokenError as error:
+                abort(401, str(error))
+            except FirebaseError as error:
+                abort(401, str(error))
         else:
             if not token:
                 abort(401, 'Unauthorized')
