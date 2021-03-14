@@ -15,7 +15,7 @@ else:
     port = 5000
     host = '127.0.0.1'
 
-test_mode = 'EXEC_ENV' not in os.environ or os.environ['EXEC_ENV'] == 'PRODUCTION'
+test_mode = 'EXEC_ENV' not in os.environ or os.environ['EXEC_ENV'] != 'PRODUCTION'
 user_auth = auth.UserAuth(test_mode)
 app = Eve(auth=user_auth)
 app.on_insert_matches += on_insert_matches
