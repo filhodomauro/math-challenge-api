@@ -2,7 +2,7 @@ import os
 from eve.auth import TokenAuth
 from flask import abort
 import firebase_admin
-from firebase_admin import auth, credentials
+from firebase_admin import auth
 
 
 class UserAuth(TokenAuth):
@@ -11,8 +11,7 @@ class UserAuth(TokenAuth):
         super().__init__()
 
         if not test_mode:
-            cred = credentials.Certificate(os.path.join(os.path.dirname(__file__), 'resources/serviceAccountKey.json'))
-            firebase_admin.initialize_app(cred)
+            firebase_admin.initialize_app()
         self.__test_mode = test_mode
 
     def check_auth(self, token, allowed_roles, resource, method):
